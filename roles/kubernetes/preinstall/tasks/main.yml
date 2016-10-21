@@ -122,6 +122,14 @@
   when: ansible_os_family == "RedHat"
   changed_when: False
 
+- name: Enable SSH agent during sudo
+  lineinfile:
+    dest: /etc/sudoers
+    line: "Defaults env_keep += \"SSH_AUTH_SOCK\""
+    state: present
+    insertafter: "^Defaults.*env_keep"
+    validate: "visudo -cf %s"
+
 - name: Write openstack cloud-config
   template:
     src: openstack-cloud-config.j2
