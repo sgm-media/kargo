@@ -3,6 +3,7 @@
   command: /bin/true
   notify:
     - Docker | reload systemd
+    - Docker | purge network k/v store
     - Docker | reload docker.socket
     - Docker | reload docker
     - Docker | pause while Docker restarts
@@ -11,6 +12,14 @@
 - name : Docker | reload systemd
   shell: systemctl daemon-reload
   when: ansible_service_mgr == "systemd"
+
+  # possible work around for https://github.com/docker/docker/issues/18113
+  # we can delete that file unconditionally, will be recreated in next step
+- name: Docker | purge network k/v store
+  file:
+    path: /var/lib/docker/network/files/local-kv.db
+    state: absent
+  when: ansible_os_family == 'CoreOS'
 
 - name: Docker | reload docker
   service:
