@@ -11,3 +11,5 @@ temp
 *.tfstate
 *.tfstate.backup
 /ssh-bastion.conf
+kargo.log
+
