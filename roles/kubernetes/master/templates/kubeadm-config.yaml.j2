@@ -42,8 +42,14 @@ apiServerExtraArgs:
 {%   if kube_oidc_username_claim is defined %}
   oidc-username-claim: {{ kube_oidc_username_claim }}
 {%   endif %}
+{%   if kube_oidc_username_prefix is defined %}
+  oidc-username-prefix: {{ kube_oidc_username_prefix }}
+{%   endif %}
 {%   if kube_oidc_groups_claim is defined %}
   oidc-groups-claim: {{ kube_oidc_groups_claim }}
+{%   endif %}
+{%   if kube_oidc_groups_prefix is defined %}
+  oidc-groups-prefix: {{ kube_oidc_groups_prefix }}
 {%   endif %}
 {% endif %}
   storage-backend: {{ kube_apiserver_storage_backend }}
